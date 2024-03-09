@@ -39,7 +39,7 @@ int construirArray(const char *nom_fitxer, int valors[])
     return contador_valors;
 }
 
-Estadistiques calcularEstadistiques(int valors[], int contador_valors)
+Estadistiques calcularEstadistiques(int valors[], int contador_valors, FILE *fitxer_traça)
 {
 
     // Control d'errors
@@ -56,8 +56,14 @@ Estadistiques calcularEstadistiques(int valors[], int contador_valors)
     estadistiques.posicio_max = 0;
     estadistiques.desv = 0;
 
+    fprintf(fitxer_traça, "%d %p\n", 2, &valors[0]);
+    fprintf(fitxer_traça, "%d %p\n", 3, &valors[0]);
+
     for (int i = 1; i < contador_valors; i++)
     {
+
+        fprintf(fitxer_traça, "%d %p\n", 2, &valors[i]);
+        fprintf(fitxer_traça, "%d %p\n", 3, &valors[i]);
 
         // Mínim
         if (valors[i] < estadistiques.valor_min)
@@ -105,9 +111,19 @@ int main(int argc, char *argv[])
         printf("Ús: %s <fitxer_valors>\n", argv[0]);
     }
 
+    FILE *fitxer_traça = fopen("tr_estadistic.prg", "w");
+
+    if (fitxer_traça == NULL)
+    {
+        printf("No es pot obrir el fitxer de traça %s.\n", "tr_estadistic.prg");
+        exit(EXIT_FAILURE);
+    }
+
     int valors[MAX_VALORS];
     int contador_valors = construirArray(argv[1], valors);
-    Estadistiques estadistiques = calcularEstadistiques(valors, contador_valors);
+    Estadistiques estadistiques = calcularEstadistiques(valors, contador_valors, fitxer_traça);
+
+    fclose(fitxer_traça);
 
     mostrarEstadistiques(estadistiques);
 }
