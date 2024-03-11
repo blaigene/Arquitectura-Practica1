@@ -109,12 +109,11 @@ Estadistiques calcularEstadistiques(int valors[], int contador_valors, FILE *fit
     fprintf(fitxer_traça, "%d %p\n", 3, &estadistiques.desv);
 
     int i;
-    for (i = 1; i < contador_valors; i++)
+    for (i = 1; i < MAX_VALORS; i++)
     {
 
         fprintf(fitxer_traça, "%d %p\n", 2, &i);
         fprintf(fitxer_traça, "%d %p\n", 3, &i);
-        fprintf(fitxer_traça, "%d %p\n", 2, &contador_valors);
 
         // Mínim
         if (valors[i] < estadistiques.valor_min)
@@ -143,22 +142,19 @@ Estadistiques calcularEstadistiques(int valors[], int contador_valors, FILE *fit
         fprintf(fitxer_traça, "%d %p\n", 2, &estadistiques.valor_max);
 
         // Mitjana
-        estadistiques.mitjana += (valors[i] / contador_valors);
+        estadistiques.mitjana += (valors[i] / MAX_VALORS);
         fprintf(fitxer_traça, "%d %p\n", 2, &valors[i]);
-        fprintf(fitxer_traça, "%d %p\n", 2, &contador_valors);
         fprintf(fitxer_traça, "%d %p\n", 2, &estadistiques.mitjana);
         fprintf(fitxer_traça, "%d %p\n", 3, &estadistiques.mitjana);
     }
 
     fprintf(fitxer_traça, "%d %p\n", 2, &i);
-    fprintf(fitxer_traça, "%d %p\n", 2, &contador_valors);
 
     // Desviació típica
-    for (i = 0; i < contador_valors; i++)
+    for (i = 0; i < MAX_VALORS; i++)
     {
         fprintf(fitxer_traça, "%d %p\n", 2, &i);
         fprintf(fitxer_traça, "%d %p\n", 3, &i);
-        fprintf(fitxer_traça, "%d %p\n", 2, &contador_valors);
         estadistiques.desv += pow(valors[i] - estadistiques.mitjana, 2);
         fprintf(fitxer_traça, "%d %p\n", 2, &estadistiques.desv);
         fprintf(fitxer_traça, "%d %p\n", 2, &estadistiques.mitjana);
@@ -166,11 +162,9 @@ Estadistiques calcularEstadistiques(int valors[], int contador_valors, FILE *fit
         fprintf(fitxer_traça, "%d %p\n", 3, &estadistiques.desv);
     }
     fprintf(fitxer_traça, "%d %p\n", 2, &i);
-    fprintf(fitxer_traça, "%d %p\n", 2, &contador_valors);
 
-    estadistiques.desv = sqrt(estadistiques.desv / contador_valors);
+    estadistiques.desv = sqrt(estadistiques.desv / MAX_VALORS);
     fprintf(fitxer_traça, "%d %p\n", 2, &estadistiques.desv);
-    fprintf(fitxer_traça, "%d %p\n", 2, &contador_valors);
     fprintf(fitxer_traça, "%d %p\n", 3, &estadistiques.desv);
 
     return estadistiques;
